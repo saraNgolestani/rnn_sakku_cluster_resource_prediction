@@ -4,8 +4,8 @@ close all;
 
 load F:\Golestani\NNs_Matlab\Sakku\App\data\app_30_5.mat
 
-k = [6,9,10,11];
-for i = 1:4
+k = [1,6,9,10,11];
+for i = 1:5
 input_data_mem(:, i) = app_30_5(1:end, k(i));
 end
 
@@ -15,18 +15,21 @@ output_data_mem(:,:) = app_30_5(1:end,3);
 input = input_data_mem;
 output = output_data_mem;
 % 
-options = genfisOptions('FCMClustering','FISType','mamdani');
-options.NumClusters = 50;
-options.Exponent = 1.55;
-options.MaxNumIteration = 5000;
-options.MinImprovement = 1e-16;
+options = genfisOptions('GridPartition');
+options.InputMembershipFunctionType = 'trimf';
+options.NumMembershipFunctions = [15 15 15 15 15];
+%options.OutputMembershipFunctionType = 'trimf'
+
+%options.NumClusters = 50;
+%options.Exponent = 1.55;
+%options.MaxNumIteration = 5000;
+%options.MinImprovement = 1e-5;
 
 fismat=genfis(input,output,options);
-
-clear input output input_data_mem output_data_mem 
+clear input output input_data_mem output_data_mem  
 
 load F:\Golestani\NNs_Matlab\Sakku\App\data\app_5_12.mat
-for i = 1:4
+for i = 1:5
 input_data_mem(:, i) = app_5_12(1:end, k(i));
 end
 
